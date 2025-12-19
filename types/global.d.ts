@@ -6,3 +6,17 @@ declare global {
 }
 
 export {};
+
+export type Personality = {
+  id: string;
+  name: string;
+  avatar: string;
+  systemPrompt: string;
+};
+
+export type Message = {
+  id: string;
+  personalityId: string;
+  sender: "user" | "ai";
+  content: string;
+};
