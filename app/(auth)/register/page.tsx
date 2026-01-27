@@ -14,7 +14,6 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const passwordStrength = {
     length: password.length >= 8,
@@ -30,12 +29,6 @@ export default function RegisterPage() {
     setLoading(true);
     setError("");
     setSuccess("");
-
-    if (!agreedToTerms) {
-      setError("Please agree to the Terms & Conditions");
-      setLoading(false);
-      return;
-    }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -76,26 +69,26 @@ export default function RegisterPage() {
   return (
     <>
       {error && (
-        <div className="bg-[#fdf6e8] border border-[#e7b8a3] text-[#8b4513] px-4 py-3 rounded-xl mb-6">
+        <div className="bg-destructive/10 border border-destructive/30 text-destructive-foreground px-4 py-3 rounded-xl mb-6">
           <p className="text-sm font-medium">{error}</p>
         </div>
       )}
 
       {success && (
-        <div className="bg-[#e8f5e9] border border-[#a3d9a5] text-[#2e7d32] px-4 py-3 rounded-xl mb-6">
+        <div className="bg-success/10 border border-success/30 text-success-foreground px-4 py-3 rounded-xl mb-6">
           <p className="text-sm font-medium">{success}</p>
         </div>
       )}
 
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-[#344e41] mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Full Name
           </label>
           <div className="relative">
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#588157]" />
+            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
-              className="w-full pl-10 pr-4 py-3 border border-[#a3b18a] rounded-xl focus:ring-2 focus:ring-[#3a5a40] focus:border-transparent transition-all text-[#344e41] placeholder:text-[#588157]/70 bg-white/90"
+              className="w-full pl-10 pr-4 py-3 border border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-foreground placeholder:text-muted-foreground bg-background"
               placeholder="John Doe"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -104,13 +97,13 @@ export default function RegisterPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-[#344e41] mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Email Address
           </label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#588157]" />
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
-              className="w-full pl-10 pr-4 py-3 border border-[#a3b18a] rounded-xl focus:ring-2 focus:ring-[#3a5a40] focus:border-transparent transition-all text-[#344e41] placeholder:text-[#588157]/70 bg-white/90"
+              className="w-full pl-10 pr-4 py-3 border border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-foreground placeholder:text-muted-foreground bg-background"
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -120,14 +113,14 @@ export default function RegisterPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-[#344e41] mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Password
           </label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#588157]" />
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full pl-10 pr-12 py-3 border border-[#a3b18a] rounded-xl focus:ring-2 focus:ring-[#3a5a40] focus:border-transparent transition-all text-[#344e41] placeholder:text-[#588157]/70 bg-white/90"
+              className="w-full pl-10 pr-12 py-3 border border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-foreground placeholder:text-muted-foreground bg-background"
               placeholder="Create a strong password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -135,7 +128,7 @@ export default function RegisterPage() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#588157] hover:text-[#3a5a40]"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
             >
               {showPassword ? (
                 <EyeOff className="w-5 h-5" />
@@ -148,14 +141,14 @@ export default function RegisterPage() {
           {/* Password Strength Meter */}
           {password && (
             <div className="mt-3 space-y-2">
-              <div className="h-2 bg-[#dad7cd] rounded-full overflow-hidden">
+              <div className="h-2 bg-muted rounded-full overflow-hidden">
                 <div
                   className={`h-full transition-all duration-300 ${
                     strengthScore < 2
-                      ? "bg-[#dc2626]"
+                      ? "bg-destructive"
                       : strengthScore < 4
-                      ? "bg-[#d97706]"
-                      : "bg-[#16a34a]"
+                      ? "bg-warning"
+                      : "bg-success"
                   }`}
                   style={{ width: `${(strengthScore / 5) * 100}%` }}
                 />
@@ -164,52 +157,50 @@ export default function RegisterPage() {
                 <div className="flex items-center gap-2">
                   <div
                     className={`w-3 h-3 rounded-full flex items-center justify-center ${
-                      passwordStrength.length ? "bg-[#16a34a]" : "bg-[#a3b18a]"
+                      passwordStrength.length ? "bg-success" : "bg-muted"
                     }`}
                   >
                     {passwordStrength.length && (
-                      <Check className="w-2 h-2 text-white" />
+                      <Check className="w-2 h-2 text-background" />
                     )}
                   </div>
-                  <span className="text-[#588157]">8+ characters</span>
+                  <span className="text-muted-foreground">8+ characters</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div
                     className={`w-3 h-3 rounded-full flex items-center justify-center ${
-                      passwordStrength.uppercase
-                        ? "bg-[#16a34a]"
-                        : "bg-[#a3b18a]"
+                      passwordStrength.uppercase ? "bg-success" : "bg-muted"
                     }`}
                   >
                     {passwordStrength.uppercase && (
-                      <Check className="w-2 h-2 text-white" />
+                      <Check className="w-2 h-2 text-background" />
                     )}
                   </div>
-                  <span className="text-[#588157]">Uppercase</span>
+                  <span className="text-muted-foreground">Uppercase</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div
                     className={`w-3 h-3 rounded-full flex items-center justify-center ${
-                      passwordStrength.number ? "bg-[#16a34a]" : "bg-[#a3b18a]"
+                      passwordStrength.number ? "bg-success" : "bg-muted"
                     }`}
                   >
                     {passwordStrength.number && (
-                      <Check className="w-2 h-2 text-white" />
+                      <Check className="w-2 h-2 text-background" />
                     )}
                   </div>
-                  <span className="text-[#588157]">Number</span>
+                  <span className="text-muted-foreground">Number</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div
                     className={`w-3 h-3 rounded-full flex items-center justify-center ${
-                      passwordStrength.special ? "bg-[#16a34a]" : "bg-[#a3b18a]"
+                      passwordStrength.special ? "bg-success" : "bg-muted"
                     }`}
                   >
                     {passwordStrength.special && (
-                      <Check className="w-2 h-2 text-white" />
+                      <Check className="w-2 h-2 text-background" />
                     )}
                   </div>
-                  <span className="text-[#588157]">Special char</span>
+                  <span className="text-muted-foreground">Special char</span>
                 </div>
               </div>
             </div>
@@ -217,14 +208,14 @@ export default function RegisterPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-[#344e41] mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Confirm Password
           </label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#588157]" />
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type={showConfirmPassword ? "text" : "password"}
-              className="w-full pl-10 pr-12 py-3 border border-[#a3b18a] rounded-xl focus:ring-2 focus:ring-[#3a5a40] focus:border-transparent transition-all text-[#344e41] placeholder:text-[#588157]/70 bg-white/90"
+              className="w-full pl-10 pr-12 py-3 border border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-foreground placeholder:text-muted-foreground bg-background"
               placeholder="Confirm your password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -232,7 +223,7 @@ export default function RegisterPage() {
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#588157] hover:text-[#3a5a40]"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
             >
               {showConfirmPassword ? (
                 <EyeOff className="w-5 h-5" />
@@ -243,39 +234,14 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        <div className="flex items-start gap-3 p-4 bg-[#e8f5e9] rounded-xl">
-          <button
-            type="button"
-            onClick={() => setAgreedToTerms(!agreedToTerms)}
-            className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all ${
-              agreedToTerms
-                ? "bg-[#3a5a40] border-[#3a5a40]"
-                : "border-[#588157] hover:border-[#3a5a40]"
-            }`}
-            aria-label="Agree to terms and conditions"
-          >
-            {agreedToTerms && <Check className="w-3 h-3 text-white" />}
-          </button>
-          <label className="text-sm text-[#588157] cursor-pointer">
-            I agree to the{" "}
-            <a href="#" className="text-[#3a5a40] font-medium hover:underline">
-              Terms of Service
-            </a>{" "}
-            and{" "}
-            <a href="#" className="text-[#3a5a40] font-medium hover:underline">
-              Privacy Policy
-            </a>
-          </label>
-        </div>
-
         <button
           onClick={handleRegister}
           disabled={loading}
-          className="w-full bg-gradient-to-r from-[#588157] to-[#3a5a40] text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-3 rounded-xl font-semibold hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {loading ? (
             <span className="flex items-center justify-center gap-2">
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin"></div>
               Creating account...
             </span>
           ) : (

@@ -135,7 +135,7 @@ export default function LoginPage() {
   return (
     <>
       {error && (
-        <div className="bg-[#fdf6e8] border border-[#e7b8a3] text-[#8b4513] px-4 py-3 rounded-xl mb-6">
+        <div className="bg-destructive/10 border border-destructive/30 text-destructive-foreground px-4 py-3 rounded-xl mb-6">
           <p className="text-sm font-medium">
             {error === "CredentialsSignin"
               ? "Invalid email or password"
@@ -146,13 +146,13 @@ export default function LoginPage() {
 
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-[#344e41] mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Email Address
           </label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#588157]" />
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
-              className="w-full pl-10 pr-4 py-3 border border-[#a3b18a] rounded-xl focus:ring-2 focus:ring-[#3a5a40] focus:border-transparent transition-all text-[#344e41] placeholder:text-[#588157]/70 bg-white/90"
+              className="w-full pl-10 pr-4 py-3 border border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-foreground placeholder:text-muted-foreground bg-background"
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -162,14 +162,14 @@ export default function LoginPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-[#344e41] mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Password
           </label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#588157]" />
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full pl-10 pr-12 py-3 border border-[#a3b18a] rounded-xl focus:ring-2 focus:ring-[#3a5a40] focus:border-transparent transition-all text-[#344e41] placeholder:text-[#588157]/70 bg-white/90"
+              className="w-full pl-10 pr-12 py-3 border border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-foreground placeholder:text-muted-foreground bg-background"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -177,7 +177,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#588157] hover:text-[#3a5a40]"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
             >
               {showPassword ? (
                 <EyeOff className="w-5 h-5" />
@@ -189,7 +189,7 @@ export default function LoginPage() {
           <div className="flex justify-end mt-2">
             <a
               href="#"
-              className="text-sm text-[#3a5a40] hover:text-[#344e41] font-medium"
+              className="text-sm text-primary hover:text-primary/80 font-medium"
             >
               Forgot password?
             </a>
@@ -199,11 +199,11 @@ export default function LoginPage() {
         <button
           onClick={handleLogin}
           disabled={loading}
-          className="w-full bg-gradient-to-r from-[#588157] to-[#3a5a40] text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-3 rounded-xl font-semibold hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {loading ? (
             <span className="flex items-center justify-center gap-2">
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin"></div>
               Signing in...
             </span>
           ) : (

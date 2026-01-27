@@ -4,6 +4,7 @@ import Personality from "@/models/Personality";
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import { generateSystemPrompt } from "@/lib/generateSystemPrompt";
+import { cloudinary } from "@/lib/cloudinary";
 
 // Type for route parameters
 interface RouteParams {
@@ -42,23 +43,12 @@ export async function PUT(req: Request, { params }: RouteParams) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { name, description, avatar } = await req.json();
-
-  if (!name || !description) {
-    return NextResponse.json(
-      { error: "Name and description required" },
-      { status: 400 }
-    );
-  }
-
   await connectDB();
 
-  // Await the params Promise
   const { id } = await params;
 
-  // Check if personality exists and belongs to user
   const existingPersonality = await Personality.findOne({
-    _id: id, // Use _id (MongoDB ID field)
+    _id: id,
     userId: session.user.id,
   });
 
@@ -69,7 +59,6 @@ export async function PUT(req: Request, { params }: RouteParams) {
     );
   }
 
-  // Don't allow editing default personalities
   if (existingPersonality.isDefault) {
     return NextResponse.json(
       { error: "Cannot edit default personalities" },
@@ -77,15 +66,54 @@ export async function PUT(req: Request, { params }: RouteParams) {
     );
   }
 
-  // Generate new system prompt with updated info
+  // ✅ READ FORMDATA
+  const formData = await req.formData();
+
+  const name = formData.get("name") as string;
+  const description = formData.get("description") as string;
+  const image = formData.get("image") as File | null;
+  const avatar = formData.get("avatar") as string | null;
+
+  if (!name || !description) {
+    return NextResponse.json(
+      { error: "Name and description required" },
+      { status: 400 }
+    );
+  }
+
+  let avatarUrl = existingPersonality.avatar;
+
+  // ✅ IF NEW IMAGE → UPLOAD TO CLOUDINARY
+  if (image && image.size > 0) {
+    const bytes = await image.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const uploadResult: any = await new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream({ folder: "personalities" }, (err, result) => {
+          if (err) reject(err);
+          else resolve(result);
+        })
+        .end(buffer);
+    });
+
+    avatarUrl = uploadResult.secure_url;
+  }
+
+  // ✅ ELSE IF PRESET AVATAR CHANGED
+  else if (avatar) {
+    avatarUrl = avatar;
+  }
+
+  // ✅ REGENERATE SYSTEM PROMPT
   const systemPrompt = await generateSystemPrompt(name, description);
 
   const updatedPersonality = await Personality.findByIdAndUpdate(
-    id, // Use the awaited id
+    id,
     {
       name,
       description,
-      avatar,
+      avatar: avatarUrl,
       systemPrompt,
     },
     { new: true }

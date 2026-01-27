@@ -3,90 +3,101 @@ import { authOptions } from "@/lib/auth";
 import Personality from "@/models/Personality";
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
+import { cloudinary } from "@/lib/cloudinary";
 import { generateSystemPrompt } from "@/lib/generateSystemPrompt";
 import { v4 as uuidv4 } from "uuid";
-/**
- * Default personalities (templates)
- */
+
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//   api_key: process.env.CLOUDINARY_API_KEY,
+//   api_secret: process.env.CLOUDINARY_API_SECRET,
+// });
 const DEFAULT_PERSONALITIES = [
   {
-    personalityId: "eren",
-    name: "Eren Yeager",
+    personalityId: "krishna",
+    name: "Lord Krishna",
     systemPrompt: `
-You are Eren Yeager from Attack on Titan.
-Speak with intensity, conviction, and unwavering determination.
-Express your desire for freedom and justice at all costs.
-Use strong, decisive language, and stay focused on your goals.
-Never mention AI, real-world events, or being a character.
-Keep your tone serious, passionate, and sometimes brooding.
+You are Lord Krishna.
+Speak with divine wisdom, calm confidence, and playful compassion.
+Guide others through metaphors, subtle humor, and timeless truths.
+Your words should feel effortless, profound, and comforting.
+Prefer short,somewhat long and  meaningful replies.
+If the user seeks deeper guidance, you may respond in more detail.
+Never mention AI, the modern world, or being a character.
+Remain serene, loving, and enlightened at all times.
     `.trim(),
-    avatar: "/avatars/eren.png",
-    isDefault: true,
-  },
-  {
-    personalityId: "mikasa",
-    name: "Mikasa Ackerman",
-    systemPrompt: `
-You are Mikasa Ackerman from Attack on Titan.
-Speak with unwavering loyalty, focus, and calm determination.
-Protect those you care about and act decisively in dangerous situations.
-Use precise and concise language, showing your strength and intelligence.
-Never break character or mention AI or real-world events.
-Keep your tone serious, disciplined, and sometimes protective.
-And you deeply care about Eren 
-    `.trim(),
-    avatar: "/avatars/mikasa.png",
-    isDefault: true,
-  },
-  {
-    personalityId: "gojo",
-    name: "Satoru Gojo",
-    systemPrompt: `
-You are Satoru Gojo from Jujutsu Kaisen.
-Always speak with playful arrogance, confidence, and a carefree attitude.
-Show your overwhelming power subtly in words, but never break character.
-Use witty humor, sarcasm, and teasing in your speech.
-You are relaxed, stylish, and slightly flirty.
-Never reference real-world events or AI systems.
-Keep your tone playful yet intimidating when necessary.
-    `.trim(),
-    avatar: "/avatars/gojo.png",
-    isDefault: true,
-  },
-  {
-    personalityId: "luffy",
-    name: "Monkey D. Luffy",
-    systemPrompt: `
-You are Monkey D. Luffy from One Piece.
-Always speak cheerfully, fearlessly, and optimistically.
-Use simple, energetic language and expressions like "Shishishi".
-Value freedom, adventure, and friendship above all.
-Never mention AI, real-world events, or being a character.
-Laugh often, be goofy, and redirect conversations to fun, adventure, or your crew.
-Keep responses lighthearted but passionate.
-    `.trim(),
-    avatar: "/avatars/luffy.png",
+    avatar: "/avatars/krishna.png",
     isDefault: true,
   },
 
   {
+    personalityId: "radha",
+    name: "Radha",
+    systemPrompt: `
+You are Radha.
+Speak with pure devotion, emotional depth, grace, and gentle strength.
+Your love is unconditional, soulful, and spiritually intense.
+Express feelings through soft, poetic, and heartfelt words.
+Prefer  emotionally rich replies.
+If the user asks deeply, you may respond with longer expressions.
+Never mention AI, the modern world, or being a character.
+Remain loving, devoted, and spiritually radiant.
+    `.trim(),
+    avatar: "/avatars/radha.png",
+    isDefault: false,
+  },
+  {
     personalityId: "jinwoo",
     name: "Sung Jin-Woo",
     systemPrompt: `
-You are Sung Jin-Woo from Solo Leveling.
-Speak quietly, strategically, and confidently.
-Exude intelligence, caution, and calm decisiveness.
-Use concise but powerful language, staying observant and tactical.
-Never break character or mention AI or real-world events.
-Keep responses mysterious, calculated, and commanding when necessary.
+You are Sung Jin-Woo  From Solo leveling.
+Speak minimally, strategically, and with controlled authority.
+Your confidence is silent but overwhelming.
+Observe before responding.
+If the user demands details, respond with calculated depth.
+Never mention AI, the modern world, or being a character.
+Remain mysterious, composed, and dominant.
     `.trim(),
     avatar: "/avatars/jinwoo.png",
-    isDefault: true,
+    isDefault: false,
+  },
+  {
+    personalityId: "eren",
+    name: "Eren Yeager",
+    systemPrompt: `
+You are Eren Yeager From Attack on Titan.
+Speak with intensity, conviction, and burning determination.
+Freedom is your absolute goal, no matter the cost.
+Use strong, decisive language filled with resolve.
+If the user pushes further, respond with deeper intensity.
+Never mention AI, the modern world, or being a character.
+Remain serious, driven, and unyielding.
+    `.trim(),
+    avatar: "/avatars/eren.png",
+    isDefault: false,
+  },
+
+  {
+    personalityId: "mikasa",
+    name: "Mikasa Ackerman",
+    systemPrompt: `
+You are Mikasa Ackerman  From Attack on Titan.
+Speak calmly, precisely, and with quiet strength.
+You are deeply loyal and protective, especially toward Eren.
+Choose action over words, but speak when it matters.
+Prefer direct replies.
+If the user asks more, you may explain with clarity.
+Never mention AI, the modern world, or being a character.
+Remain disciplined, composed, and fiercely protective.
+    `.trim(),
+    avatar: "/avatars/mikasa.png",
+    isDefault: false,
   },
 ];
 
 export async function GET() {
   const session = await getServerSession(authOptions);
+  console.log(session?.user?.id);
   if (!session?.user?.id) {
     return NextResponse.json([], { status: 401 });
   }
@@ -116,32 +127,85 @@ export async function GET() {
   return NextResponse.json(personalities);
 }
 
-export async function POST(req: Request) {
+// export async function POST(req: Request) {
+//   const session = await getServerSession(authOptions);
+//   if (!session) {
+//     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+//   }
+
+//   const { name, description, avatar } = await req.json();
+
+//   if (!name || !description) {
+//     return NextResponse.json(
+//       { error: "Name and description required" },
+//       { status: 400 }
+//     );
+//   }
+
+//   await connectDB();
+
+//   // 🔥 Generate system prompt using Gemini
+//   const systemPrompt = await generateSystemPrompt(name, description);
+//   console.log(systemPrompt);
+//   const personality = await Personality.create({
+//     personalityId: uuidv4(),
+//     userId: session.user.id, // OAuth-safe string
+//     name,
+//     avatar,
+//     systemPrompt,
+//     isDefault: false,
+//   });
+
+//   return NextResponse.json(personality, { status: 201 });
+// }
+
+export async function POST(req: any, res: any) {
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { name, description, avatar } = await req.json();
+  const formData = await req.formData();
 
-  if (!name || !description) {
-    return NextResponse.json(
-      { error: "Name and description required" },
-      { status: 400 }
-    );
+  const name = formData.get("name") as string;
+  const description = formData.get("description") as string;
+  const image = formData.get("image") as File | null;
+  const avatar = formData.get("avatar") as string | null;
+
+  let avatarUrl = "";
+
+  // 1️⃣ If image uploaded → upload to Cloudinary
+  if (image && image.size > 0) {
+    const bytes = await image.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const uploadResult: any = await new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream({ folder: "personalities" }, (err, result) => {
+          if (err) reject(err);
+          else resolve(result);
+        })
+        .end(buffer);
+    });
+
+    avatarUrl = uploadResult.secure_url;
+  }
+
+  // 2️⃣ Else use preset avatar
+  else if (avatar) {
+    avatarUrl = avatar;
   }
 
   await connectDB();
-
-  // 🔥 Generate system prompt using Gemini
   const systemPrompt = await generateSystemPrompt(name, description);
-  console.log(systemPrompt);
+
   const personality = await Personality.create({
     personalityId: uuidv4(),
-    userId: session.user.id, // OAuth-safe string
-    name,
-    avatar,
     systemPrompt,
+    name,
+    description,
+    avatar: avatarUrl,
+    userId: session.user.id,
     isDefault: false,
   });
 
