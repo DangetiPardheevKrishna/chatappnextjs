@@ -1,9 +1,9 @@
 // components/PersonalityPageLoading.tsx
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -14,7 +14,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: {
     opacity: 1,
@@ -27,7 +27,7 @@ const itemVariants = {
   },
 };
 
-const pulseVariants = {
+const pulseVariants: Variants = {
   initial: { opacity: 0.3, scale: 1 },
   animate: {
     opacity: [0.3, 0.5, 0.3],
@@ -39,7 +39,7 @@ const pulseVariants = {
   },
 };
 
-const shimmerVariants = {
+const shimmerVariants: Variants = {
   initial: { x: "-100%" },
   animate: {
     x: "100%",
@@ -51,7 +51,7 @@ const shimmerVariants = {
   },
 };
 
-const floatingVariants = {
+const floatingVariants: Variants = {
   animate: {
     y: [0, -10, 0],
     transition: {

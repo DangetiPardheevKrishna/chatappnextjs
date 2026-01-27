@@ -1349,7 +1349,7 @@ import Link from "next/link";
 import PersonalityPageLoading from "@/components/personalityPageLoading";
 import PersonalityCard from "@/components/personalityCard";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
-
+import { Variants } from "framer-motion";
 // Default avatar options
 const AVATAR_OPTIONS = [
   "/avatars/krishna.png",
@@ -1372,7 +1372,7 @@ const AVATAR_OPTIONS = [
 //   }
 // };
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: {
     opacity: 0,
     y: 20,
@@ -1407,7 +1407,7 @@ const cardVariants = {
   },
 };
 
-const avatarContainerVariants = {
+const avatarContainerVariants: Variants = {
   hover: {
     scale: 1.05,
     transition: {
@@ -1418,7 +1418,7 @@ const avatarContainerVariants = {
   },
 };
 
-const badgeVariants = {
+const badgeVariants: Variants = {
   hidden: { scale: 0, opacity: 0 },
   show: {
     scale: 1,
@@ -1441,7 +1441,7 @@ const badgeVariants = {
   },
 };
 
-const titleVariants = {
+const titleVariants: Variants = {
   hover: {
     color: "#9333ea",
     transition: {
@@ -1450,7 +1450,7 @@ const titleVariants = {
   },
 };
 
-const buttonVariants = {
+const buttonVariants: Variants = {
   initial: { scale: 1 },
   hover: {
     scale: 1.05,
@@ -1468,7 +1468,7 @@ const buttonVariants = {
   },
 };
 
-const chatButtonVariants = {
+const chatButtonVariants: Variants = {
   initial: {
     background: "linear-gradient(90deg, #2563eb, #0891b2)",
   },
@@ -1487,7 +1487,7 @@ const chatButtonVariants = {
   },
 };
 
-const actionButtonVariants = {
+const actionButtonVariants: Variants = {
   hover: {
     x: 2,
     transition: {
@@ -1537,7 +1537,7 @@ const FloatingParticles = () => (
 // ... inside your component ...
 
 // Animation variants
-const avatarItemVariants = {
+const avatarItemVariants: Variants = {
   initial: { scale: 1 },
   hover: {
     scale: 1.05,
@@ -1554,7 +1554,7 @@ const avatarItemVariants = {
   },
 };
 
-const uploadAreaVariants = {
+const uploadAreaVariants: Variants = {
   initial: { scale: 1, borderColor: "#d1d5db" },
   hover: {
     scale: 1.01,
@@ -1568,7 +1568,7 @@ const uploadAreaVariants = {
   tap: { scale: 0.99 },
 };
 
-const avatarImageVariants = {
+const avatarImageVariants: Variants = {
   initial: { scale: 1 },
   hover: {
     scale: 1.1,
@@ -1579,7 +1579,7 @@ const avatarImageVariants = {
   },
 };
 
-const iconVariants = {
+const iconVariants: Variants = {
   initial: { rotate: 0 },
   hover: {
     rotate: 15,
@@ -1590,7 +1590,7 @@ const iconVariants = {
   },
 };
 
-const selectionRingVariants = {
+const selectionRingVariants: Variants = {
   initial: { scale: 0.8, opacity: 0 },
   animate: {
     scale: 1,
@@ -1602,7 +1602,7 @@ const selectionRingVariants = {
   },
 };
 
-const previewImageVariants = {
+const previewImageVariants: Variants = {
   initial: { scale: 1 },
   hover: {
     scale: 1.05,
@@ -1613,7 +1613,7 @@ const previewImageVariants = {
   },
 };
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,
@@ -1632,7 +1632,7 @@ const fadeInUp = {
   },
 };
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -1643,7 +1643,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
   show: {
     y: 0,

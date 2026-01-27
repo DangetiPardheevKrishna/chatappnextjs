@@ -50,9 +50,6 @@ import AuthProvider from "@/providers/AuthProvider";
 
 import { ThemeProvider } from "@/components/theme-provider";
 
-import ParticlesWrapper from "@/components/particleWrapper";
-import NavigationSection from "@/components/NavigationSection";
-
 // Inter - Most popular modern sans-serif
 const inter = Inter({
   variable: "--font-inter",
@@ -88,7 +85,7 @@ export default function RootLayout({
         >
           <AuthProvider>
             {/* Background particles (GLOBAL) */}
-           
+
             <main>{children}</main>
           </AuthProvider>
         </ThemeProvider>
