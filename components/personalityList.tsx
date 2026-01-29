@@ -1897,7 +1897,7 @@ export default function PersonalityList({
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="w-72 border-r border-border bg-card shadow-sm flex flex-col h-screen"
+        className="w-full border-r border-border bg-card shadow-sm flex flex-col h-dvh"
       >
         <div className="p-6 pb-4">
           <div className="h-7 bg-muted rounded w-48 mb-6"></div>
@@ -1931,7 +1931,7 @@ export default function PersonalityList({
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 300 }}
-      className="w-full border-r border-border bg-card shadow-sm flex flex-col h-screen"
+      className="w-full border-r border-border bg-card shadow-sm flex flex-col h-dvh"
     >
       {/* Header */}
       <motion.div

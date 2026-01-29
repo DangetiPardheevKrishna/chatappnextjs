@@ -3,7 +3,7 @@ import ChatPageClient from "./chatpageclient";
 
 export default function Page() {
   return (
-    <Suspense fallback={<div className="h-screen" />}>
+    <Suspense fallback={<div className="h-dvh" />}>
       <ChatPageClient />
     </Suspense>
   );

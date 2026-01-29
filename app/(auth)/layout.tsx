@@ -174,7 +174,7 @@ export default function AuthLayout({ children }: LayoutProps) {
   const isRegisterPage = pathname === "/register";
 
   return (
-    <div className="min-h-screen bg-primary/10">
+    <div className="min-h-dvh bg-primary/10">
       {" "}
       {/* Decorative Background Elements */}
       <div className="fixed inset-0 overflow-hidden">
@@ -182,7 +182,7 @@ export default function AuthLayout({ children }: LayoutProps) {
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-accent/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
       </div>
-      <div className="relative min-h-screen flex items-center justify-center p-4">
+      <div className="relative min-h-dvh flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           {/* Auth Card */}
           <div className="bg-background/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-primary/20 overflow-hidden">

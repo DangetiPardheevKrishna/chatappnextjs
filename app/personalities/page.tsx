@@ -1897,7 +1897,7 @@ export default function PersonalitiesPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br bg-background-from bg-background-to p-4 md:p-6">
+      <div className="min-h-dvh bg-gradient-to-br bg-background-from bg-background-to p-4 md:p-6">
         <div className="max-w-7xl mx-auto">
           {/* Navigation Header with Back to Home */}
           <div className="mb-8">

@@ -302,7 +302,10 @@ import { Particles } from "@/components/ui/particles";
 import { useTheme } from "next-themes";
 import { Menu, Sidebar, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import Loader from "@/components/hamsterloader";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import Lottie from "lottie-react";
+import animationData from "../public/paperplaneloader.json";
 export default function ChatPageClient() {
   const [personalities, setPersonalities] = useState<any[]>([]);
   const [selected, setSelected] = useState<any>(null);
@@ -349,7 +352,7 @@ export default function ChatPageClient() {
   if (!mounted) return null;
 
   return (
-    <div className="relative h-screen bg-background overflow-hidden">
+    <div className="relative h-dvh bg-background overflow-hidden">
       <Particles
         key={resolvedTheme}
         className="fixed inset-0 z-0 pointer-events-none"
@@ -410,80 +413,64 @@ export default function ChatPageClient() {
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-8">
               {/* Animated Gradient Avatar */}
-              <div className="relative">
+              {/* <div className="relative">
                 <div className="w-28 h-28 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500 animate-gradient-x shadow-lg shadow-purple-500/20">
                   <div className="absolute inset-4 rounded-full bg-background flex items-center justify-center">
                     <div className="text-4xl animate-pulse">🤖</div>
                   </div>
                 </div>
-                {/* Pulsing Rings */}
+              
                 <div className="absolute inset-0 rounded-full border-2 border-purple-400/30 animate-ping"></div>
                 <div className="absolute -inset-1 rounded-full border-2 border-pink-400/20 animate-pulse"></div>
-              </div>
+              </div> */}
 
               {/* Text Content */}
               <div className="space-y-4">
-                <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                {/* <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                   Welcome to AI Chat
-                </h2>
+                </h2> */}
 
                 <div className="flex flex-col items-center space-y-3">
-                  <p className="text-muted-foreground text-lg">
-                    {loading ? (
-                      <>
-                        <span className="inline-block animate-pulse">
-                          Loading personalities
-                        </span>
-                        <span className="inline-flex ml-2">
-                          <span className="animate-bounce mx-0.5">.</span>
-                          <span
-                            className="animate-bounce mx-0.5"
-                            style={{ animationDelay: "0.1s" }}
-                          >
-                            .
-                          </span>
-                          <span
-                            className="animate-bounce mx-0.5"
-                            style={{ animationDelay: "0.2s" }}
-                          >
-                            .
-                          </span>
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="block lg:hidden">
-                          Tap the menu button to select a personality
-                        </span>
-                        <span className="hidden lg:block">
-                          Select a personality from the sidebar to start
-                          chatting
-                        </span>
-                      </>
-                    )}
-                  </p>
-
-                  {loading && (
-                    <div className="pt-2">
-                      <div className="w-64 h-1.5 bg-secondary rounded-full overflow-hidden">
-                        <div className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-progress"></div>
+                  {loading ? (
+                    <>
+                      <div style={{ width: 400 }}>
+                        <Lottie
+                          animationData={animationData}
+                          loop={true}
+                          autoplay={true}
+                        />
                       </div>
-                    </div>
+                      {/* <span className="inline-block animate-pulse">
+                        Loading personalities
+                      </span>
+                      <span className="inline-flex ml-2">
+                        <span className="animate-bounce mx-0.5">.</span>
+                        <span
+                          className="animate-bounce mx-0.5"
+                          style={{ animationDelay: "0.1s" }}
+                        >
+                          .
+                        </span>
+                        <span
+                          className="animate-bounce mx-0.5"
+                          style={{ animationDelay: "0.2s" }}
+                        >
+                          .
+                        </span>
+                      </span> */}
+                    </>
+                  ) : (
+                    <>
+                      <span className="block lg:hidden">
+                        Tap the menu button to select a personality
+                      </span>
+                      <span className="hidden lg:block">
+                        Select a personality from the sidebar to start chatting
+                      </span>
+                    </>
                   )}
                 </div>
               </div>
-
-              {/* Mobile Prompt */}
-              {!loading && (
-                <Button
-                  variant="outline"
-                  className="lg:hidden mt-4"
-                  onClick={() => setSidebarOpen(true)}
-                >
-                  <Menu className="h-4 w-4 mr-2" />
-                  Browse Personalities
-                </Button>
-              )}
             </div>
           )}
         </div>

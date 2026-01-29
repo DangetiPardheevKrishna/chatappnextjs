@@ -68,7 +68,7 @@ export default function PersonalityPageLoading() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-gradient-to-br from-background-from to-background-to p-4 md:p-6"
+      className="min-h-dvh bg-gradient-to-br from-background-from to-background-to p-4 md:p-6"
     >
       <div className="max-w-7xl mx-auto">
         {/* Header Loading with Animation */}
