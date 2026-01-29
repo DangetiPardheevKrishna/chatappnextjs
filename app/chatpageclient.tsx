@@ -391,7 +391,6 @@ export default function ChatPageClient() {
               }
             }}
             loading={loading}
-            onClose={() => setSidebarOpen(false)}
           />
         </div>
 
