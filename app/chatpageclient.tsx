@@ -316,22 +316,43 @@ export default function ChatPageClient() {
   const { resolvedTheme } = useTheme();
 
   const color = resolvedTheme === "dark" ? "#ffffff" : "#000000";
-
   useEffect(() => {
     fetch("/api/personality")
       .then((res) => res.json())
       .then((data) => {
         setPersonalities(data);
+
         const personalityId = searchParams.get("personality");
-        if (personalityId) {
-          const found = data.find((p: any) => p._id === personalityId);
+        const found = personalityId
+          ? data.find((p: any) => p._id === personalityId)
+          : null;
+
+        // ⏳ delay for loading animation
+        setTimeout(() => {
           setSelected(found ?? data[0] ?? null);
-        } else {
-          setSelected(data[0] ?? null);
-        }
-        setLoading(false);
+          setLoading(false);
+        }, 3000);
       });
   }, [searchParams]);
+
+  // useEffect(() => {
+  //   fetch("/api/personality")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setPersonalities(data);
+  //       const personalityId = searchParams.get("personality");
+  //       if (personalityId) {
+  //         const found = data.find((p: any) => p._id === personalityId);
+  //         setSelected(found ?? data[0] ?? null);
+  //       } else {
+  //         setSelected(data[0] ?? null);
+  //       }
+  //       setTimeout(() => {
+  //         setSelected(found ?? data[0] ?? null);
+  //         setLoading(false);
+  //       }, 2000);
+  //     });
+  // }, [searchParams]);
 
   useEffect(() => {
     setMounted(true);

@@ -851,7 +851,7 @@ export default function ChatWindow({
               variant="ghost"
               size="icon"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="mr-2"
+              className="mr-2 lg:hidden "
             >
               {sidebarOpen ? (
                 <X className="h-5 w-5" />
