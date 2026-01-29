@@ -620,7 +620,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import MessageInput from "./messageInput";
-import { LogOut, User, Settings } from "lucide-react";
+import { LogOut, User, Settings, X, Menu } from "lucide-react";
 import {
   PaperAirplaneIcon,
   UserCircleIcon,
@@ -630,7 +630,7 @@ import { ClockIcon } from "@heroicons/react/24/outline";
 import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 import { signOut } from "next-auth/react";
 import UserMenu from "./menu";
-
+import { Button } from "@/components/ui/button";
 // Default avatar images for different personalities
 const defaultAvatarImages = [
   "/avatars/eren.png",
@@ -657,7 +657,11 @@ const getAvatarImage = (personality: any) => {
   return null;
 };
 
-export default function ChatWindow({ personality }: any) {
+export default function ChatWindow({
+  personality,
+  sidebarOpen,
+  setSidebarOpen,
+}: any) {
   const [messages, setMessages] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
@@ -843,6 +847,19 @@ export default function ChatWindow({ personality }: any) {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <AnimatedThemeToggler />
             <UserMenu />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="mr-2"
+            >
+              {sidebarOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </Button>
+
             {/* <button
               onClick={() =>
                 signOut({ callbackUrl: "http://localhost:3000/login" })
@@ -943,8 +960,8 @@ export default function ChatWindow({ personality }: any) {
                   m.sender === "user"
                     ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-br-none"
                     : m.sender === "system"
-                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-bl-none"
-                    : "bg-card border border-border rounded-bl-none"
+                      ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-bl-none"
+                      : "bg-card border border-border rounded-bl-none"
                 }`}
               >
                 <p
@@ -959,8 +976,8 @@ export default function ChatWindow({ personality }: any) {
                     m.sender === "user"
                       ? "text-blue-200"
                       : m.sender === "system"
-                      ? "text-amber-200"
-                      : "text-muted-foreground"
+                        ? "text-amber-200"
+                        : "text-muted-foreground"
                   }`}
                 >
                   {formatTime(m.timestamp)}

@@ -82,14 +82,14 @@ export default function MessageInput({ onSend, loading }: any) {
           {/* Input */}
           <div className="flex-1 relative">
             <input
-              className="w-full border border-input bg-background rounded-full px-4 py-3 pr-32 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-muted-foreground"
+              className="w-full border border-input bg-background rounded-full px-4 py-3 pr-20 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-muted-foreground"
               value={text}
               onChange={(e) => setText(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && submit()}
               placeholder={`Type your message...`}
               disabled={loading}
             />
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground">
+            <div className="hidden lg:visible absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground">
               Press Enter to send
             </div>
           </div>

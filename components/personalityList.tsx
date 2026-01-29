@@ -1889,7 +1889,7 @@ export default function PersonalityList({
   const filteredPersonalities = personalities.filter(
     (p) =>
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (p.description || "").toLowerCase().includes(searchTerm.toLowerCase())
+      (p.description || "").toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   if (loading) {
@@ -1931,7 +1931,7 @@ export default function PersonalityList({
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 300 }}
-      className="w-80 border-r border-border bg-card shadow-sm flex flex-col h-screen"
+      className="w-full border-r border-border bg-card shadow-sm flex flex-col h-screen"
     >
       {/* Header */}
       <motion.div

@@ -1718,7 +1718,7 @@ export default function PersonalitiesPage() {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -1812,8 +1812,8 @@ export default function PersonalitiesPage() {
         const updatedPersonality = await res.json();
         setPersonalities((prev) =>
           prev.map((p) =>
-            p._id === updatedPersonality._id ? updatedPersonality : p
-          )
+            p._id === updatedPersonality._id ? updatedPersonality : p,
+          ),
         );
         setShowEditModal(false);
         resetForm();
@@ -1841,7 +1841,7 @@ export default function PersonalitiesPage() {
 
       if (res.ok) {
         setPersonalities((prev) =>
-          prev.filter((p) => p._id !== selectedPersonality._id)
+          prev.filter((p) => p._id !== selectedPersonality._id),
         );
         setShowDeleteModal(false);
         setSelectedPersonality(null);
@@ -1903,7 +1903,7 @@ export default function PersonalitiesPage() {
           <div className="mb-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               {/* Left: Back to Home */}
-              <div className="flex items-center gap-3">
+              <div className="hidden lg:flex items-center gap-3">
                 <Link
                   href="/"
                   className="inline-flex items-center gap-2 px-4 py-2 text-muted-foreground hover:bg-card hover:shadow-sm rounded-xl transition-all duration-200"
@@ -1914,7 +1914,7 @@ export default function PersonalitiesPage() {
               </div>
 
               {/* Right: Add Personality Button */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between mt-4 lg:justify-start lg:gap-3">
                 <button
                   onClick={() => {
                     resetForm();
